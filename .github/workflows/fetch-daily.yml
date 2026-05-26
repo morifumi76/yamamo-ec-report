@@ -71,7 +71,10 @@ jobs:
             exit 0
           fi
           echo "::notice::refresh_token がローテーションされました。Secret を更新します。"
-          if ! echo -n "$NEW" | gh secret set BASE_REFRESH_TOKEN --body -; then
+          # 注意: gh secret set の --body はリテラル文字列を取るため、`--body -` は
+          # 「リテラル `-`（1文字）」を Secret に書き込んでしまう（2026-05-18 障害の原因）。
+          # stdin から読ませる場合は --body を付けずに stdin パイプを使う。
+          if ! printf '%s' "$NEW" | gh secret set BASE_REFRESH_TOKEN; then
             echo "::error::Secret 更新に失敗しました（gh secret set がエラー）。次回実行が確実に失敗するため、本ジョブも失敗扱いにします。"
             echo "::error::REPO_PAT の権限（Secrets: Read and write）と有効期限を確認してください。"
             exit 1
