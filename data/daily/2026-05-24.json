@@ -1,0 +1,31 @@
+{
+  "date": "2026-05-24",
+  "fetchedAt": "2026-05-27T06:13:35+09:00",
+  "orderCount": 1,
+  "totalSales": 4530,
+  "orders": [
+    {
+      "orderId": "D8917BF6EC7301B0",
+      "orderedAt": "2026-05-24T19:18:39+09:00",
+      "totalAmount": 4530,
+      "shippingArea": "沖縄県",
+      "items": [
+        {
+          "name": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ",
+          "quantity": 1,
+          "unitPrice": 750
+        },
+        {
+          "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.0ℓ",
+          "quantity": 1,
+          "unitPrice": 650
+        },
+        {
+          "name": "こうじ｜塩麹｜プラスチックパック 300g",
+          "quantity": 3,
+          "unitPrice": 540
+        }
+      ]
+    }
+  ]
+}
