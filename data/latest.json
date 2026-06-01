@@ -1,16 +1,16 @@
 {
-  "month": "2026-04",
-  "monthLabel": "2026年4月",
-  "generatedAt": "2026-05-09",
+  "month": "2026-05",
+  "monthLabel": "2026年5月",
+  "generatedAt": "2026-06-01",
   "inProgress": false,
-  "daysCovered": 30,
-  "daysInMonth": 30,
+  "daysCovered": 31,
+  "daysInMonth": 31,
   "summary": {
-    "totalSales": 35600,
-    "orderCount": 9,
-    "averageOrderValue": 3956,
-    "monthOverMonthPct": null,
-    "monthOverMonthBasis": null
+    "totalSales": 6580,
+    "orderCount": 2,
+    "averageOrderValue": 3290,
+    "monthOverMonthPct": -81.5,
+    "monthOverMonthBasis": "full"
   },
   "dailySales": [
     {
@@ -35,11 +35,11 @@
     },
     {
       "day": 6,
-      "sales": 2010
+      "sales": 0
     },
     {
       "day": 7,
-      "sales": 3240
+      "sales": 0
     },
     {
       "day": 8,
@@ -59,11 +59,11 @@
     },
     {
       "day": 12,
-      "sales": 4210
+      "sales": 0
     },
     {
       "day": 13,
-      "sales": 0
+      "sales": 2050
     },
     {
       "day": 14,
@@ -75,7 +75,7 @@
     },
     {
       "day": 16,
-      "sales": 3960
+      "sales": 0
     },
     {
       "day": 17,
@@ -83,11 +83,11 @@
     },
     {
       "day": 18,
-      "sales": 1370
+      "sales": 0
     },
     {
       "day": 19,
-      "sales": 8820
+      "sales": 0
     },
     {
       "day": 20,
@@ -103,11 +103,11 @@
     },
     {
       "day": 23,
-      "sales": 4820
+      "sales": 0
     },
     {
       "day": 24,
-      "sales": 0
+      "sales": 4530
     },
     {
       "day": 25,
@@ -115,7 +115,7 @@
     },
     {
       "day": 26,
-      "sales": 7170
+      "sales": 0
     },
     {
       "day": 27,
@@ -132,150 +132,63 @@
     {
       "day": 30,
       "sales": 0
+    },
+    {
+      "day": 31,
+      "sales": 0
     }
   ],
   "chartScale": {
-    "leftMax": 15000,
+    "leftMax": 10000,
     "rightMax": 50000
   },
   "productRanking": [
     {
       "rank": 1,
-      "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
-      "quantity": 10,
-      "sales": 9400,
-      "sharePct": 26.4
+      "name": "こうじ｜塩麹｜プラスチックパック 300g",
+      "quantity": 3,
+      "sales": 1620,
+      "sharePct": 24.6
     },
     {
       "rank": 2,
       "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.0ℓ",
-      "quantity": 10,
-      "sales": 5900,
-      "sharePct": 16.6
+      "quantity": 2,
+      "sales": 1180,
+      "sharePct": 17.9
     },
     {
       "rank": 3,
       "name": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ",
-      "quantity": 4,
-      "sales": 3000,
-      "sharePct": 8.4
+      "quantity": 1,
+      "sales": 750,
+      "sharePct": 11.4
     },
     {
       "rank": 4,
-      "name": "本醸造しょうゆ｜本醸造醤油｜ペットボトル 1.8ℓ",
-      "quantity": 2,
-      "sales": 1770,
-      "sharePct": 5.0
-    },
-    {
-      "rank": 5,
-      "name": "専用しょうゆ｜さしみ醤油｜瓶 200mℓ",
-      "quantity": 4,
-      "sales": 1600,
-      "sharePct": 4.5
-    },
-    {
-      "rank": 6,
-      "name": "専用しょうゆ｜たまごかけ醤油｜瓶 200mℓ",
-      "quantity": 3,
-      "sales": 1500,
-      "sharePct": 4.2
-    },
-    {
-      "rank": 7,
       "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.0ℓ",
       "quantity": 1,
       "sales": 650,
-      "sharePct": 1.8
-    },
-    {
-      "rank": 8,
-      "name": "みそ｜米味噌｜ビニールパック 1.0Kg",
-      "quantity": 1,
-      "sales": 610,
-      "sharePct": 1.7
-    },
-    {
-      "rank": 9,
-      "name": "混合醸造しょうゆ｜淡口（うすくち）醤油｜ペットボトル 1.0ℓ",
-      "quantity": 1,
-      "sales": 550,
-      "sharePct": 1.5
+      "sharePct": 9.9
     }
   ],
   "recentOrders": [
     {
-      "date": "4/26",
-      "orderNumber": "4918CD52F04F8FFA",
-      "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
-      "quantity": 6,
-      "amount": 7170,
-      "shippingArea": "岡山県"
+      "date": "5/24",
+      "orderNumber": "D8917BF6EC7301B0",
+      "productName": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ ほか2点",
+      "quantity": 5,
+      "amount": 4530,
+      "shippingArea": "沖縄県"
     },
     {
-      "date": "4/23",
-      "orderNumber": "FF48A66F3BBF60CC",
+      "date": "5/13",
+      "orderNumber": "D2390AD61EBB2C8F",
       "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.0ℓ",
-      "quantity": 6,
-      "amount": 4820,
-      "shippingArea": "岡山県"
-    },
-    {
-      "date": "4/19",
-      "orderNumber": "588274D8EC541BB8",
-      "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ ほか2点",
-      "quantity": 10,
-      "amount": 8820,
-      "shippingArea": "愛知県"
-    },
-    {
-      "date": "4/18",
-      "orderNumber": "44DAD408FF191ED0",
-      "productName": "専用しょうゆ｜たまごかけ醤油｜瓶 200mℓ",
-      "quantity": 1,
-      "amount": 1370,
-      "shippingArea": "愛媛県"
-    },
-    {
-      "date": "4/16",
-      "orderNumber": "0E583983BCAF0089",
-      "productName": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ ほか1点",
-      "quantity": 4,
-      "amount": 3960,
-      "shippingArea": "福岡県"
-    },
-    {
-      "date": "4/12",
-      "orderNumber": "DD1367602F55427C",
-      "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.0ℓ ほか1点",
       "quantity": 2,
-      "amount": 2340,
-      "shippingArea": "東京都"
-    },
-    {
-      "date": "4/12",
-      "orderNumber": "41A3D14A799DF971",
-      "productName": "専用しょうゆ｜たまごかけ醤油｜瓶 200mℓ",
-      "quantity": 2,
-      "amount": 1870,
-      "shippingArea": "山口県"
-    },
-    {
-      "date": "4/7",
-      "orderNumber": "F643857F85FEA598",
-      "productName": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ ほか1点",
-      "quantity": 3,
-      "amount": 3240,
-      "shippingArea": "東京都"
-    },
-    {
-      "date": "4/6",
-      "orderNumber": "BE6A28DDA79846A9",
-      "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.0ℓ ほか1点",
-      "quantity": 2,
-      "amount": 2010,
-      "shippingArea": "広島県"
+      "amount": 2050,
+      "shippingArea": "兵庫県"
     }
   ],
-  "aiComment": ""
+  "aiComment": "2026年5月の振り返りとして、今月の売上総額は¥6,580、注文件数は2件で、前月比は-81.5%という結果となりました。トップ商品は「こうじ｜塩麹」で、全体の24.6%を占めました。売上があった日数は2日で、ピーク日は24日でした。\n\n好調だった点としては、人気商品の「こうじ｜塩麹」が安定した需要を見せたことが挙げられます。特に家庭での料理需要が高まっていることが影響しているでしょう。 \n\n一方で、課題としては注文件数が極めて少なく、売上を支える商品数が不足している点が挙げられます。新規顧客の獲得やリピーターの増加に向けた施策が必要です。\n\n来月への提案としては、SNSを通じてのプロモーション強化や、定期的なキャンペーンを実施することで、顧客の関心を引きつけることが重要です。また、新商品やセット商品の導入も検討し、選択肢を広げることで、売上の向上を図りたいと思います。お客様に喜ばれる商品を提供し、信頼を築いていきましょう。"
 }
