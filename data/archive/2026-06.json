@@ -1,0 +1,144 @@
+{
+  "month": "2026-06",
+  "monthLabel": "2026年6月",
+  "generatedAt": "2026-06-02",
+  "inProgress": true,
+  "daysCovered": 1,
+  "daysInMonth": 30,
+  "summary": {
+    "totalSales": 0,
+    "orderCount": 0,
+    "averageOrderValue": 0,
+    "monthOverMonthPct": null,
+    "monthOverMonthBasis": null
+  },
+  "dailySales": [
+    {
+      "day": 1,
+      "sales": 0
+    },
+    {
+      "day": 2,
+      "sales": 0
+    },
+    {
+      "day": 3,
+      "sales": 0
+    },
+    {
+      "day": 4,
+      "sales": 0
+    },
+    {
+      "day": 5,
+      "sales": 0
+    },
+    {
+      "day": 6,
+      "sales": 0
+    },
+    {
+      "day": 7,
+      "sales": 0
+    },
+    {
+      "day": 8,
+      "sales": 0
+    },
+    {
+      "day": 9,
+      "sales": 0
+    },
+    {
+      "day": 10,
+      "sales": 0
+    },
+    {
+      "day": 11,
+      "sales": 0
+    },
+    {
+      "day": 12,
+      "sales": 0
+    },
+    {
+      "day": 13,
+      "sales": 0
+    },
+    {
+      "day": 14,
+      "sales": 0
+    },
+    {
+      "day": 15,
+      "sales": 0
+    },
+    {
+      "day": 16,
+      "sales": 0
+    },
+    {
+      "day": 17,
+      "sales": 0
+    },
+    {
+      "day": 18,
+      "sales": 0
+    },
+    {
+      "day": 19,
+      "sales": 0
+    },
+    {
+      "day": 20,
+      "sales": 0
+    },
+    {
+      "day": 21,
+      "sales": 0
+    },
+    {
+      "day": 22,
+      "sales": 0
+    },
+    {
+      "day": 23,
+      "sales": 0
+    },
+    {
+      "day": 24,
+      "sales": 0
+    },
+    {
+      "day": 25,
+      "sales": 0
+    },
+    {
+      "day": 26,
+      "sales": 0
+    },
+    {
+      "day": 27,
+      "sales": 0
+    },
+    {
+      "day": 28,
+      "sales": 0
+    },
+    {
+      "day": 29,
+      "sales": 0
+    },
+    {
+      "day": 30,
+      "sales": 0
+    }
+  ],
+  "chartScale": {
+    "leftMax": 5000,
+    "rightMax": 50000
+  },
+  "productRanking": [],
+  "recentOrders": [],
+  "aiComment": ""
+}
