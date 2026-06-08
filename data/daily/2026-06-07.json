@@ -1,0 +1,21 @@
+{
+  "date": "2026-06-07",
+  "fetchedAt": "2026-06-08T11:59:30+09:00",
+  "orderCount": 1,
+  "totalSales": 2070,
+  "orders": [
+    {
+      "orderId": "1CE7417DFF6AF5E2",
+      "orderedAt": "2026-06-07T18:21:47+09:00",
+      "totalAmount": 2070,
+      "shippingArea": "神奈川県",
+      "items": [
+        {
+          "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.8ℓ",
+          "quantity": 1,
+          "unitPrice": 970
+        }
+      ]
+    }
+  ]
+}

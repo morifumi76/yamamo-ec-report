@@ -5,11 +5,11 @@
     "start": "2026-04",
     "end": "2027-03"
   },
-  "generatedAt": "2026-06-07",
+  "generatedAt": "2026-06-08",
   "summary": {
-    "totalSales": 42180,
-    "orderCount": 11,
-    "averageOrderValue": 3835,
+    "totalSales": 44250,
+    "orderCount": 12,
+    "averageOrderValue": 3688,
     "yearOverYearPct": null
   },
   "monthlySales": [
@@ -26,7 +26,7 @@
     {
       "month": "2026-06",
       "monthLabel": "6月",
-      "sales": 0
+      "sales": 2070
     },
     {
       "month": "2026-07",
@@ -84,70 +84,77 @@
       "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
       "quantity": 10,
       "sales": 9400,
-      "sharePct": 22.3
+      "sharePct": 21.2
     },
     {
       "rank": 2,
       "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.0ℓ",
       "quantity": 12,
       "sales": 7080,
-      "sharePct": 16.8
+      "sharePct": 16.0
     },
     {
       "rank": 3,
       "name": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ",
       "quantity": 5,
       "sales": 3750,
-      "sharePct": 8.9
+      "sharePct": 8.5
     },
     {
       "rank": 4,
       "name": "本醸造しょうゆ｜本醸造醤油｜ペットボトル 1.8ℓ",
       "quantity": 2,
       "sales": 1770,
-      "sharePct": 4.2
+      "sharePct": 4.0
     },
     {
       "rank": 5,
       "name": "こうじ｜塩麹｜プラスチックパック 300g",
       "quantity": 3,
       "sales": 1620,
-      "sharePct": 3.8
+      "sharePct": 3.7
     },
     {
       "rank": 6,
       "name": "専用しょうゆ｜さしみ醤油｜瓶 200mℓ",
       "quantity": 4,
       "sales": 1600,
-      "sharePct": 3.8
+      "sharePct": 3.6
     },
     {
       "rank": 7,
       "name": "専用しょうゆ｜たまごかけ醤油｜瓶 200mℓ",
       "quantity": 3,
       "sales": 1500,
-      "sharePct": 3.6
+      "sharePct": 3.4
     },
     {
       "rank": 8,
       "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.0ℓ",
       "quantity": 2,
       "sales": 1300,
-      "sharePct": 3.1
+      "sharePct": 2.9
     },
     {
       "rank": 9,
+      "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.8ℓ",
+      "quantity": 1,
+      "sales": 970,
+      "sharePct": 2.2
+    },
+    {
+      "rank": 10,
       "name": "みそ｜米味噌｜ビニールパック 1.0Kg",
       "quantity": 1,
       "sales": 610,
       "sharePct": 1.4
     },
     {
-      "rank": 10,
+      "rank": 11,
       "name": "混合醸造しょうゆ｜淡口（うすくち）醤油｜ペットボトル 1.0ℓ",
       "quantity": 1,
       "sales": 550,
-      "sharePct": 1.3
+      "sharePct": 1.2
     }
   ],
   "aiComment": ""
