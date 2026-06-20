@@ -1,14 +1,14 @@
 {
   "month": "2026-06",
   "monthLabel": "2026年6月",
-  "generatedAt": "2026-06-19",
+  "generatedAt": "2026-06-20",
   "inProgress": true,
-  "daysCovered": 18,
+  "daysCovered": 19,
   "daysInMonth": 30,
   "summary": {
-    "totalSales": 2070,
-    "orderCount": 1,
-    "averageOrderValue": 2070,
+    "totalSales": 9350,
+    "orderCount": 2,
+    "averageOrderValue": 4675,
     "monthOverMonthPct": null,
     "monthOverMonthBasis": null
   },
@@ -87,7 +87,7 @@
     },
     {
       "day": 19,
-      "sales": 0
+      "sales": 7280
     },
     {
       "day": 20,
@@ -135,19 +135,41 @@
     }
   ],
   "chartScale": {
-    "leftMax": 5000,
+    "leftMax": 10000,
     "rightMax": 50000
   },
   "productRanking": [
     {
       "rank": 1,
       "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.8ℓ",
-      "quantity": 1,
-      "sales": 970,
-      "sharePct": 46.9
+      "quantity": 3,
+      "sales": 2910,
+      "sharePct": 31.1
+    },
+    {
+      "rank": 2,
+      "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
+      "quantity": 2,
+      "sales": 1880,
+      "sharePct": 20.1
+    },
+    {
+      "rank": 3,
+      "name": "本醸造しょうゆ｜本醸造醤油｜ペットボトル 1.8ℓ",
+      "quantity": 2,
+      "sales": 1770,
+      "sharePct": 18.9
     }
   ],
   "recentOrders": [
+    {
+      "date": "6/19",
+      "orderNumber": "AE07308F5AF50E30",
+      "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ ほか2点",
+      "quantity": 6,
+      "amount": 7280,
+      "shippingArea": "岐阜県"
+    },
     {
       "date": "6/7",
       "orderNumber": "1CE7417DFF6AF5E2",

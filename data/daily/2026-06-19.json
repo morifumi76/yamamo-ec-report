@@ -1,0 +1,31 @@
+{
+  "date": "2026-06-19",
+  "fetchedAt": "2026-06-20T11:48:23+09:00",
+  "orderCount": 1,
+  "totalSales": 7280,
+  "orders": [
+    {
+      "orderId": "AE07308F5AF50E30",
+      "orderedAt": "2026-06-19T21:02:15+09:00",
+      "totalAmount": 7280,
+      "shippingArea": "岐阜県",
+      "items": [
+        {
+          "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
+          "quantity": 2,
+          "unitPrice": 940
+        },
+        {
+          "name": "本醸造しょうゆ｜本醸造醤油｜ペットボトル 1.8ℓ",
+          "quantity": 2,
+          "unitPrice": 885
+        },
+        {
+          "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.8ℓ",
+          "quantity": 2,
+          "unitPrice": 970
+        }
+      ]
+    }
+  ]
+}
