@@ -1,14 +1,14 @@
 {
   "month": "2026-06",
   "monthLabel": "2026年6月",
-  "generatedAt": "2026-06-26",
+  "generatedAt": "2026-06-27",
   "inProgress": true,
-  "daysCovered": 25,
+  "daysCovered": 26,
   "daysInMonth": 30,
   "summary": {
-    "totalSales": 9350,
-    "orderCount": 2,
-    "averageOrderValue": 4675,
+    "totalSales": 11220,
+    "orderCount": 3,
+    "averageOrderValue": 3740,
     "monthOverMonthPct": null,
     "monthOverMonthBasis": null
   },
@@ -115,7 +115,7 @@
     },
     {
       "day": 26,
-      "sales": 0
+      "sales": 1870
     },
     {
       "day": 27,
@@ -144,24 +144,39 @@
       "name": "本醸造しょうゆ｜純正（じゅんせい）醤油｜ペットボトル 1.8ℓ",
       "quantity": 3,
       "sales": 2910,
-      "sharePct": 31.1
+      "sharePct": 25.9
     },
     {
       "rank": 2,
       "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
       "quantity": 2,
       "sales": 1880,
-      "sharePct": 20.1
+      "sharePct": 16.8
     },
     {
       "rank": 3,
       "name": "本醸造しょうゆ｜本醸造醤油｜ペットボトル 1.8ℓ",
       "quantity": 2,
       "sales": 1770,
-      "sharePct": 18.9
+      "sharePct": 15.8
+    },
+    {
+      "rank": 4,
+      "name": "専用しょうゆ｜たまごかけ醤油｜瓶 200mℓ",
+      "quantity": 2,
+      "sales": 1000,
+      "sharePct": 8.9
     }
   ],
   "recentOrders": [
+    {
+      "date": "6/26",
+      "orderNumber": "B5DF7106B0AACFDF",
+      "productName": "専用しょうゆ｜たまごかけ醤油｜瓶 200mℓ",
+      "quantity": 2,
+      "amount": 1870,
+      "shippingArea": "愛媛県"
+    },
     {
       "date": "6/19",
       "orderNumber": "AE07308F5AF50E30",
