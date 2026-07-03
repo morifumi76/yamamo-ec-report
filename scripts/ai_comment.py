@@ -23,10 +23,26 @@ from pathlib import Path
 import requests
 
 # GitHub Models（OpenAI互換エンドポイント）
-MODELS_API_URL = "https://models.inference.ai.azure.com/chat/completions"
-MODEL_ID = "gpt-4o-mini"
+# v1.5: 旧 models.inference.ai.azure.com は非推奨のため新APIへ移行。モデルIDは publisher 付き。
+MODELS_API_URL = "https://models.github.ai/inference/chat/completions"
+MODEL_ID = "openai/gpt-4o-mini"
 
 REQUEST_TIMEOUT_SEC = 60
+
+
+def format_pct_with_direction(pct: float | None, compare_label: str) -> str:
+    """前月比/前年比を「+12.3%（前月より増加）」のように符号と向きを明示して整形する。
+
+    符号なしの生数値だけを渡すと、AIが増減の向きを取り違えることがある
+    （2026-06 レポートで +98.9% の増収を「微減」と誤記した実例あり）。
+    """
+    if pct is None:
+        return f"—（{compare_label}データなし）"
+    if pct > 0:
+        return f"+{pct}%（{compare_label}より増加）"
+    if pct < 0:
+        return f"{pct}%（{compare_label}より減少）"
+    return f"±0%（{compare_label}と同水準）"
 
 
 def build_prompt(payload: dict) -> str:
@@ -36,7 +52,7 @@ def build_prompt(payload: dict) -> str:
     order_count = summary.get("orderCount", 0)
     avg = summary.get("averageOrderValue", 0)
     mom = summary.get("monthOverMonthPct")
-    mom_text = f"{mom}%" if mom is not None else "—（前月データなし）"
+    mom_text = format_pct_with_direction(mom, "前月")
 
     top5 = payload.get("productRanking", [])[:5]
     if top5:
@@ -87,7 +103,11 @@ def build_fiscal_prompt(payload: dict) -> str:
     order_count = summary.get("orderCount", 0)
     avg = summary.get("averageOrderValue", 0)
     yoy = summary.get("yearOverYearPct")
-    yoy_text = f"{yoy}%" if yoy is not None else "—（前年データなし・初年度）"
+    yoy_text = (
+        format_pct_with_direction(yoy, "前年度")
+        if yoy is not None
+        else "—（前年データなし・初年度）"
+    )
 
     monthly = payload.get("monthlySales", [])
     monthly_text = "\n".join(

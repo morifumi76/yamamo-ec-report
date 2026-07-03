@@ -1,4 +1,4 @@
-# yamamo-ec-report｜最終設計書 v1.4
+# yamamo-ec-report｜最終設計書 v1.5
 
 ## 改訂履歴
 - v1.0 (2026-04-24) 初版。前提に「index.html は sample-data.json を読んで surge.sh で動作中」と記載。
@@ -23,6 +23,25 @@
     - **AIコメントは月途中では生成しない**（月末締め後の `generate-monthly` ジョブのみ実行）
     - `months.json` に `inProgressMonth` を追加。index.html 側はプルダウンに「（途中経過）」バッジ表示
   - §9 マイルストーンに M8（当月対応）を追加
+- v1.5 (2026-07-04) **運用堅牢化＋AIコメント精度改善**（一斉テストで検出した不具合の修正）
+  - §2 [B] 月次ジョブを **10:00 JST → 20:00 JST** に変更。GitHub Actions の cron 遅延により
+    日次ジョブ（前月末日分の取得）より先に月次確定が走るレースを回避するため
+    （実績: 6/1 は日次 12:28 JST・月次 14:51 JST、7/1 は日次 11:53 JST・月次 14:13 JST と、
+    月次側の遅延で偶然セーフだった）
+  - §2 [B] 月次ジョブ冒頭に **前月末日 daily ファイルの存在ガード**を追加。無ければ明示的に失敗させ、
+    「月末日抜けの確定レポート」が静かに生成される事故を防ぐ
+  - §2 [A] Secret 書き戻しステップを `if: always()` 化。fetch が途中失敗しても
+    ローテーション済み refresh_token を確実に Secrets へ保存する（保存漏れ＝翌日以降全滅の防止）
+  - §4 latest.json の更新ルールを明確化: **過去月の再生成では latest.json を巻き戻さない**
+    （target month が latest.json の月より古い場合はスキップ。workflow_dispatch での過去月再生成対策）
+  - §5 プロンプトの前月比/前年比に **符号と増減の向きを明示**（「+98.9%（前月より増加）」形式。
+    2026-06 レポートで増収を「微減」と誤記した事故の再発防止）
+  - §5 **年次AIコメントの生成タイミングを確定**: 年度最終月（3月）の月次確定時に
+    fiscal-YYYY.json へ生成。年度途中の fiscal 再構築では既存 aiComment を保持する
+  - §5 GitHub Models のエンドポイントを新API（models.github.ai/inference）へ移行
+  - §2 両ワークフローとも push 前に `git pull --rebase` を実行（同時実行時の push 失敗対策）
+  - §4 index.html: 構成比を小数1桁固定表示、動的挿入文字列のHTMLエスケープ、
+    年間AIコメント未生成時の案内文言を「年度締め後（4月1日の月次ジョブ）に生成」へ修正
 
 ## 1. システム概要
 森田醤油醸造元のBASE ECショップから売上データを**毎日蓄積**し、
@@ -32,18 +51,25 @@
 ─────────────────────────────────────
 [A] 毎日 09:00 JST  → データ取得ジョブ（fetch-daily）
     BASE API → data/daily/YYYY-MM-DD.json に追記
+    ローテーションされた refresh_token を GitHub Secrets へ書き戻し
+    （v1.5: このステップは if: always() で実行。fetch が途中失敗しても
+      使用済みトークンの保存漏れ＝翌日以降の認証全滅を防ぐ）
     ↓ （v1.4 で追加）
     当月の generate_monthly.py --no-ai --force を続けて実行
     → data/archive/YYYY-MM.json（inProgress=true）と data/months.json を更新
     （これにより index.html で「当月の本日までの集計」が閲覧可能）
 
-[B] 毎月 1日 10:00 JST → 月次レポート生成ジョブ（generate-monthly）
+[B] 毎月 1日 20:00 JST → 月次レポート生成ジョブ（generate-monthly）
+    （v1.5: 10:00 → 20:00 に変更。日次ジョブの cron 遅延を待ってから確定するため）
+    前月末日の daily/*.json が存在するかガードチェック（無ければ明示的に失敗）
     前月分 daily/*.json を集計
     → data/latest.json に書き出し
     → AI分析コメントを GitHub Models で生成（前月分のみ）
     → 当月の archive を inProgress=false に確定
     → index.html がlatest.jsonを読んで描画
     → git commit & push（GitHub Pages自動デプロイ）
+
+※ 両ジョブとも push 前に git pull --rebase を実行（同時実行時の push 失敗対策・v1.5）
 ─────────────────────────────────────
 
 ## 3. リポジトリ構成
@@ -91,6 +117,13 @@ yamamo-ec-report/
 | `data/archive/fiscal-YYYY.json` | 年度（4月〜翌3月）累計データ | generate_monthly.py（月次のついでに再生成） |
 | `data/latest.json` | 最新月次のスナップショット | generate_monthly.py（月次） |
 | `data/months.json` | 利用可能な月＋年度のインデックス | generate_monthly.py（月次） |
+
+### latest.json の更新ルール（v1.5 追加）
+- latest.json は「**最新の確定月**」のスナップショット。以下のいずれかに該当する場合は更新しない:
+  - `--no-latest` 指定時
+  - 対象月が月途中（inProgress=true）のとき（v1.4 既存ルール）
+  - **対象月が既存 latest.json の月より古いとき**（v1.5 追加。workflow_dispatch で
+    過去月を再生成した際に latest.json が巻き戻る事故を防ぐ）
 
 ### latest.json 確定キー構造
 
@@ -270,10 +303,22 @@ yamamo-ec-report/
 
 → **案①（GitHub Models）を推奨**（運用コスト抑制）。
 
-### AIコメントの生成タイミング（v1.4 確定）
+### AIコメントの生成タイミング（v1.5 更新）
 - **月途中（inProgress=true）では生成しない**。`aiComment` は空文字のまま archive/latest に書き出し、画面では「AI分析コメントは月末締め後に生成されます。」を表示。
-- 生成は **毎月1日 10:00 JST の `generate-monthly` ジョブのみ**（前月確定分に対して `--with-ai` で実行）。
-- 当月分の AI コメントが必要なケースが将来出てきた場合は、ジョブを別途追加する（v1.4 時点ではコスト・品質・整合性を優先してスキップ）。
+- 生成は **毎月1日 20:00 JST の `generate-monthly` ジョブのみ**（前月確定分に対して `--with-ai` で実行）。
+- **年次コメント（v1.5 確定）**: 年度最終月（3月）を確定する 4月1日の月次ジョブで、
+  `fiscal-YYYY.json` の `aiComment` に年間版（約400字）を生成する。
+  年度途中の fiscal 再構築（毎日の当月集計・月次確定時）では既存の `aiComment` を保持し、上書きしない。
+- 当月分の AI コメントが必要なケースが将来出てきた場合は、ジョブを別途追加する（コスト・品質・整合性を優先してスキップ）。
+
+### プロンプトへ渡す前月比/前年比の表記（v1.5 追加）
+- 正の値は `+12.3%（前月より増加）`、負の値は `-12.3%（前月より減少）`、0 は `±0%（前月と同水準）` と
+  **符号と増減の向きを明示**して渡す。
+  （符号なしで渡していたため、2026-06 レポートで +98.9% の増収を「微減」と誤記する事故が発生した）
+
+### GitHub Models エンドポイント（v1.5 更新）
+- 新API `https://models.github.ai/inference/chat/completions`／モデルID `openai/gpt-4o-mini` を使用する。
+  （旧 `models.inference.ai.azure.com` は非推奨化が進んでいるため移行）
 
 ### 月次コメントの立て付け（v1.2で確定）
 - **文字数**: 300字 ±50字
@@ -354,4 +399,7 @@ yamamo-ec-report/
 - M5b: ✅ 月間/年間タブ追加＋fiscal-YYYY.json 集計＋年度プルダウン＋売上比率チャート
 - M6: ✅ GitHub Actions 両ワークフロー設定（毎日09:00 / 毎月1日10:00 JST）
 - M7: ✅ 本番運用開始（fetch-daily 自動実行、月次は5/3に手動で2026-04分を生成）
-- M8: 🚧 当月（in-progress）対応：fetch-daily 末尾に当月再集計、同日数前月比、AI途中スキップ、UI途中経過バッジ（**本PR**）
+- M8: ✅ 当月（in-progress）対応：fetch-daily 末尾に当月再集計、同日数前月比、AI途中スキップ、UI途中経過バッジ
+- M9: 🚧 運用堅牢化（v1.5）：Secret書き戻し always() 化、月次ジョブ 20:00 JST 化＋前月末日ガード、
+  latest.json 巻き戻し防止、AIプロンプト符号明示、年次AIコメント生成、新Models API移行、
+  push前 rebase、UI微修正（構成比小数1桁・HTMLエスケープ・年間AI文言）（**本PR**）
