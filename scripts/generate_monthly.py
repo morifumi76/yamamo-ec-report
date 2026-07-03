@@ -49,6 +49,8 @@ FISCAL_RIGHT_AXIS_MIN = 500000
 
 # 会計年度の開始月（4月始まり）
 FISCAL_START_MONTH = 4
+# 会計年度の最終月（=3月）。この月の確定時に年次AIコメントを生成する（v1.5）
+FISCAL_FINAL_MONTH = FISCAL_START_MONTH - 1 if FISCAL_START_MONTH > 1 else 12
 
 
 def parse_args() -> argparse.Namespace:
@@ -354,7 +356,18 @@ def aggregate_fiscal(fiscal_year: int) -> dict:
     """会計年度（4月〜翌3月）のアーカイブを月次archive群から組み立てる。
 
     存在する月だけ取り込み、無い月は売上0として扱う。
+    v1.5: 既存の fiscal-YYYY.json に aiComment があれば引き継ぐ
+    （年度途中の再構築で年次AIコメントが消えるのを防ぐ）。
     """
+    existing_comment = ""
+    existing_path = ARCHIVE_DIR / f"fiscal-{fiscal_year}.json"
+    if existing_path.exists():
+        try:
+            existing_comment = json.loads(
+                existing_path.read_text(encoding="utf-8")
+            ).get("aiComment", "")
+        except json.JSONDecodeError:
+            existing_comment = ""
     months_in_fy = fiscal_year_months(fiscal_year)
     monthly_archives: dict[str, dict] = {}
     for ym in months_in_fy:
@@ -438,7 +451,7 @@ def aggregate_fiscal(fiscal_year: int) -> dict:
         "monthlySales": monthly_sales,
         "chartScale": {"leftMax": left_max, "rightMax": right_max},
         "productRanking": product_ranking,
-        "aiComment": "",
+        "aiComment": existing_comment,
     }
 
 
@@ -494,6 +507,16 @@ def rebuild_months_index() -> dict:
     }
     write_json(MONTHS_INDEX_PATH, payload)
     return payload
+
+
+def latest_month_on_disk() -> str | None:
+    """既存 latest.json の対象月（YYYY-MM）を返す。無ければ None。"""
+    if not LATEST_PATH.exists():
+        return None
+    try:
+        return json.loads(LATEST_PATH.read_text(encoding="utf-8")).get("month")
+    except json.JSONDecodeError:
+        return None
 
 
 def main() -> int:
@@ -570,8 +593,19 @@ def main() -> int:
     # latest.json 書き出し
     # v1.4: 月途中の archive は latest.json を上書きしない
     #       （latest.json は「最新の確定月」のスナップショット。月途中は archive 経由で表示する）
+    # v1.5: 過去月の再生成（workflow_dispatch等）で latest.json が巻き戻るのを防ぐ。
+    #       既存 latest.json の月より古い対象月では更新しない。
+    latest_written = False
     if not args.no_latest and not in_progress:
-        write_json(LATEST_PATH, payload)
+        existing_latest_month = latest_month_on_disk()
+        if existing_latest_month and existing_latest_month > target_month:
+            print(
+                f"\n[skip] latest.json は {existing_latest_month} を指しているため、"
+                f"過去月 {target_month} では更新しません（archive のみ更新）。"
+            )
+        else:
+            write_json(LATEST_PATH, payload)
+            latest_written = True
     elif in_progress and not args.no_latest:
         print("\n[skip] 月途中のため latest.json は更新しません（archive のみ更新）。")
 
@@ -579,13 +613,28 @@ def main() -> int:
     fiscal_year = determine_fiscal_year(target_month)
     fiscal_path = rebuild_fiscal_archive(fiscal_year)
 
+    # v1.5: 年度最終月（3月）の確定時は、年次AIコメントを生成して fiscal に埋め込む
+    if args.with_ai and not args.no_ai and not in_progress and month == FISCAL_FINAL_MONTH:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from ai_comment import generate_fiscal_comment  # noqa: E402
+
+        print("\n年次AIコメントを生成中...")
+        fiscal_payload = json.loads(fiscal_path.read_text(encoding="utf-8"))
+        try:
+            fiscal_payload["aiComment"] = generate_fiscal_comment(fiscal_payload)
+            write_json(fiscal_path, fiscal_payload)
+            print(f"  → 生成完了（{len(fiscal_payload['aiComment'])}字）")
+        except Exception as e:
+            print(f"  → 失敗: {e}")
+            print("  → fiscal の aiComment は空のままにします")
+
     # months.json を再構築（プルダウン用インデックス）
     months_index = rebuild_months_index()
 
     # サマリ表示
     print("\n保存しました:")
     print(f"  {archive_path}{' (inProgress=true)' if in_progress else ''}")
-    if not args.no_latest and not in_progress:
+    if latest_written:
         print(f"  {LATEST_PATH}")
     print(f"  {fiscal_path} （{fiscal_year}年度集計）")
     ipm = months_index.get("inProgressMonth")

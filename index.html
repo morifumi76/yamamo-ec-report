@@ -370,6 +370,14 @@
       }
       return '¥' + v.toLocaleString();
     }
+    // 構成比は常に小数1桁で表示（JSONの 1.0 が「1%」になる表記ゆれ防止）
+    function fmtPct(v) { return Number(v ?? 0).toFixed(1) + '%'; }
+    // innerHTML に流し込む動的文字列（商品名など）のHTMLエスケープ
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+    }
     function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
     function showError(msg) {
       document.getElementById('errorDetail').textContent = msg;
@@ -537,11 +545,11 @@
         card.innerHTML = `
           <div class="shrink-0 pt-0.5">${badgeHtml}</div>
           <div class="flex-1 min-w-0">
-            <p class="text-sm ${it.rank <= 3 ? 'font-medium' : ''} text-brown-900" style="overflow-wrap:anywhere; word-break:normal;">${it.name}</p>
+            <p class="text-sm ${it.rank <= 3 ? 'font-medium' : ''} text-brown-900" style="overflow-wrap:anywhere; word-break:normal;">${esc(it.name)}</p>
             <p class="text-xs text-brown-500 mt-1.5">
               <span class="text-brown-400">販売</span> <span class="font-medium text-brown-700">${it.quantity}</span>個 ・
               <span class="font-medium text-brown-900">${fmtYen(it.sales)}</span> ・
-              <span class="text-brown-400">構成比</span> <span class="${shareClass}">${it.sharePct}%</span>
+              <span class="text-brown-400">構成比</span> <span class="${shareClass}">${fmtPct(it.sharePct)}</span>
             </p>
             <div class="h-1.5 bg-brown-100 rounded mt-2 overflow-hidden">
               <div class="h-1.5 ${barColor} rounded" style="width:${widthPct}%"></div>
@@ -584,7 +592,7 @@
 
         const shareTd = document.createElement('td');
         shareTd.className = `px-3 py-3 text-right ${SHARE_TEXT[it.rank] || 'text-brown-500'}`;
-        shareTd.textContent = `${it.sharePct}%`;
+        shareTd.textContent = fmtPct(it.sharePct);
         tr.appendChild(shareTd);
 
         const barTd = document.createElement('td');
@@ -623,7 +631,7 @@
       items.forEach((p, i) => {
         const li = document.createElement('div');
         const color = SHARE_COLORS[i] || SHARE_COLOR_FALLBACK;
-        li.innerHTML = `<span class="share-legend-dot" style="background:${color}"></span><span class="font-mono text-brown-400 mr-1">${p.rank}.</span>${p.name}<span class="text-brown-400 ml-1">（${p.sharePct}%）</span>`;
+        li.innerHTML = `<span class="share-legend-dot" style="background:${color}"></span><span class="font-mono text-brown-400 mr-1">${p.rank}.</span>${esc(p.name)}<span class="text-brown-400 ml-1">（${fmtPct(p.sharePct)}）</span>`;
         legend.appendChild(li);
       });
     }
@@ -646,12 +654,12 @@
         card.className = 'py-3 first:pt-0 last:pb-0';
         card.innerHTML = `
           <div class="flex justify-between items-baseline gap-2 mb-1">
-            <span class="text-xs text-brown-500">${o.date || ''}・${o.shippingArea || ''}</span>
+            <span class="text-xs text-brown-500">${esc(o.date)}・${esc(o.shippingArea)}</span>
             <span class="text-sm font-bold text-brown-900">${fmtYen(o.amount)}</span>
           </div>
-          <p class="text-sm text-brown-900" style="overflow-wrap:anywhere; word-break:normal;">${o.productName || ''}</p>
+          <p class="text-sm text-brown-900" style="overflow-wrap:anywhere; word-break:normal;">${esc(o.productName)}</p>
           <p class="text-xs text-brown-400 mt-1">
-            数量 ${o.quantity ?? ''} ・ <span class="font-mono">${o.orderNumber || ''}</span>
+            数量 ${o.quantity ?? ''} ・ <span class="font-mono">${esc(o.orderNumber)}</span>
           </p>
         `;
         cards.appendChild(card);
@@ -662,12 +670,12 @@
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-cream-50';
         tr.innerHTML = `
-          <td class="px-3 py-3 text-brown-500">${o.date || ''}</td>
-          <td class="px-3 py-3 text-brown-400 font-mono text-xs">${o.orderNumber || ''}</td>
-          <td class="px-3 py-3">${o.productName || ''}</td>
+          <td class="px-3 py-3 text-brown-500">${esc(o.date)}</td>
+          <td class="px-3 py-3 text-brown-400 font-mono text-xs">${esc(o.orderNumber)}</td>
+          <td class="px-3 py-3">${esc(o.productName)}</td>
           <td class="px-3 py-3 text-right">${o.quantity ?? ''}</td>
           <td class="px-3 py-3 text-right font-medium">${fmtYen(o.amount)}</td>
-          <td class="px-3 py-3 text-brown-500">${o.shippingArea || ''}</td>
+          <td class="px-3 py-3 text-brown-500">${esc(o.shippingArea)}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -687,7 +695,7 @@
           el.textContent = 'まだ月途中のため、AI分析コメントは月末締め後（毎月1日）に生成されます。';
         } else {
           el.textContent = mode === 'fiscal'
-            ? 'AI年間分析コメントは年次ジョブ後に生成されます。'
+            ? 'AI年間分析コメントは年度締め後（4月1日の月次ジョブ）に生成されます。'
             : 'AI分析コメントは月次ジョブ後に生成されます。';
         }
         el.classList.add('italic', 'opacity-70');

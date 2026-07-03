@@ -11,7 +11,7 @@
 - AI: GitHub Models（月次AI分析コメント生成・予定）
 
 ## フォルダ構成
-- `docs/specs/` : 設計書・仕様書（現行は v1.4）
+- `docs/specs/` : 設計書・仕様書（現行は v1.5）
 - `scripts/` : Python スクリプト群（今後追加）
   - `oauth_init.py` : 初回認証（ローカル1回のみ）
   - `fetch_daily.py` : 前日分データ取得
@@ -28,7 +28,7 @@
 - `starter/` : 旧テンプレ残骸（.gitignoreで除外済み・将来要否判断）
 
 ## このプロジェクト固有のルール
-- 設計書（`docs/specs/yamamo-ec-report｜最終設計書 v1.4.md`）に従って実装する。差分が生じたら**設計書を先に更新**してから実装を変更する。
+- 設計書（`docs/specs/yamamo-ec-report｜最終設計書 v1.5.md`）に従って実装する。差分が生じたら**設計書を先に更新**してから実装を変更する。
 - 既存ファイル（`index.html` / `sample-data.json` / `yamamo-rogo.png`）は不用意に上書きしない。
 - `main` ブランチへの直接pushは禁止。必ず feature ブランチ + PR 方式で進める。
 - 削除系コマンド（`rm -rf` 等）は一切使わない。
@@ -37,14 +37,13 @@
 
 ## 主要な外部サービス
 - BASE（EC基盤）: OAuth 2.0 で API 利用。Secrets に `BASE_CLIENT_ID` / `BASE_CLIENT_SECRET` / `BASE_REFRESH_TOKEN` を登録。
-- GitHub Actions: 毎日 09:00 JST でデータ取得、毎月1日 10:00 JST でレポート生成。
-- GitHub Models: AI分析コメント生成に使用（予定）。
+- GitHub Actions: 毎日 09:00 JST でデータ取得、毎月1日 20:00 JST でレポート生成。
+- GitHub Models: AI分析コメント生成に使用（月次確定時＋年度締め時）。
 - GitHub Pages: レポート公開先。
 
 ## 現在の状態
-- M0 実施中（2026-04-24〜）
-  - `starter/` 整理、設計書v1.1化、README更新、.gitignore作成、CLAUDE.md作成
-- 次はM1（BASE開発者アプリ登録・ユーザー作業）
+- M0〜M8 完了・本番運用中（2026-04〜 日次取得と月次レポート生成が自動実行されている）
+- M9 実施中（2026-07-04〜）: 運用堅牢化（設計書 v1.5 の改訂履歴を参照）
 
 ## 🔒 機密情報の取り扱いルール（厳守）
 

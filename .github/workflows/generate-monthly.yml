@@ -1,14 +1,17 @@
 name: Monthly Report Generation
 
-# 毎月 1日 10:00 JST に前月分の月次レポートを集計し、
+# 毎月 1日 20:00 JST に前月分の月次レポートを集計し、
 # AIコメント込みで data/latest.json / data/archive/YYYY-MM.json /
 # data/archive/fiscal-YYYY.json / data/months.json を更新してコミットする。
-# UTC 1:00 = JST 10:00（cron: '0 1 1 * *'）。
-# 設計書 v1.3 §2 / §5 / §9 M6 に準拠。
+# UTC 11:00 = JST 20:00（cron: '0 11 1 * *'）。
+# v1.5: 10:00 JST → 20:00 JST に変更。日次ジョブ（前月末日分の取得）は cron 遅延で
+#       昼過ぎまでずれ込むことがあり、月次が先に走ると月末日抜けの確定レポートが
+#       生成されてしまうため、十分に間隔を空ける。
+# 設計書 v1.5 §2 / §5 に準拠。
 
 on:
   schedule:
-    - cron: '0 1 1 * *'    # 毎月1日 10:00 JST
+    - cron: '0 11 1 * *'   # 毎月1日 20:00 JST
   workflow_dispatch:
     inputs:
       month:
@@ -40,6 +43,24 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # v1.5: 前月末日の daily ファイルが無いまま確定すると「月末日抜けレポート」が
+      # 静かに公開されてしまう。存在しない場合は明示的に失敗させ、
+      # 日次ジョブ完了後に workflow_dispatch で再実行してもらう。
+      - name: Verify last day of target month is fetched
+        env:
+          INPUT_MONTH: ${{ inputs.month }}
+        run: |
+          MONTH="$INPUT_MONTH"
+          if [ -z "$MONTH" ]; then
+            MONTH=$(TZ=Asia/Tokyo date -d "$(TZ=Asia/Tokyo date +%Y-%m-01) -1 month" +%Y-%m)
+          fi
+          LAST_DAY=$(date -d "${MONTH}-01 +1 month -1 day" +%Y-%m-%d)
+          if [ ! -f "data/daily/${LAST_DAY}.json" ]; then
+            echo "::error::data/daily/${LAST_DAY}.json がまだありません。日次ジョブ（fetch-daily）の完了を待ってから、workflow_dispatch で本ジョブを再実行してください。"
+            exit 1
+          fi
+          echo "OK: data/daily/${LAST_DAY}.json が存在します。"
+
       - name: Generate monthly report (with AI comment)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,6 +84,8 @@ jobs:
               MONTH_LABEL=$(TZ=Asia/Tokyo date -d '1 month ago' +%Y-%m)
             fi
             git commit -m "data: 月次レポート自動生成 (${MONTH_LABEL})"
+            # v1.5: 他ジョブが先に push していた場合に備えて rebase してから push する
+            git pull --rebase origin main
             git push
           else
             echo "::notice::データに変更なし、コミットをスキップします"
