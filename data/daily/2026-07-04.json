@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-04",
+  "fetchedAt": "2026-07-05T11:33:06+09:00",
+  "orderCount": 2,
+  "totalSales": 8640,
+  "orders": [
+    {
+      "orderId": "D3597C31FE7DAD56",
+      "orderedAt": "2026-07-04T23:12:34+09:00",
+      "totalAmount": 6520,
+      "shippingArea": "大阪府",
+      "items": [
+        {
+          "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
+          "quantity": 2,
+          "unitPrice": 940
+        },
+        {
+          "name": "みそ｜麦味噌｜ビニールパック 1.0Kg",
+          "quantity": 5,
+          "unitPrice": 610
+        }
+      ]
+    },
+    {
+      "orderId": "C8F676DF8BE78D8E",
+      "orderedAt": "2026-07-04T00:46:17+09:00",
+      "totalAmount": 2120,
+      "shippingArea": "愛知県",
+      "items": [
+        {
+          "name": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ",
+          "quantity": 1,
+          "unitPrice": 750
+        },
+        {
+          "name": "専用しょうゆ｜さしみ醤油｜瓶 200mℓ",
+          "quantity": 1,
+          "unitPrice": 400
+        }
+      ]
+    }
+  ]
+}

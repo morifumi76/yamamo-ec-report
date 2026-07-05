@@ -1,14 +1,14 @@
 {
   "month": "2026-07",
   "monthLabel": "2026年7月",
-  "generatedAt": "2026-07-04",
+  "generatedAt": "2026-07-05",
   "inProgress": true,
-  "daysCovered": 3,
+  "daysCovered": 4,
   "daysInMonth": 31,
   "summary": {
-    "totalSales": 0,
-    "orderCount": 0,
-    "averageOrderValue": 0,
+    "totalSales": 8640,
+    "orderCount": 2,
+    "averageOrderValue": 4320,
     "monthOverMonthPct": null,
     "monthOverMonthBasis": null
   },
@@ -27,7 +27,7 @@
     },
     {
       "day": 4,
-      "sales": 0
+      "sales": 8640
     },
     {
       "day": 5,
@@ -139,10 +139,56 @@
     }
   ],
   "chartScale": {
-    "leftMax": 5000,
+    "leftMax": 15000,
     "rightMax": 50000
   },
-  "productRanking": [],
-  "recentOrders": [],
+  "productRanking": [
+    {
+      "rank": 1,
+      "name": "みそ｜麦味噌｜ビニールパック 1.0Kg",
+      "quantity": 5,
+      "sales": 3050,
+      "sharePct": 35.3
+    },
+    {
+      "rank": 2,
+      "name": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ",
+      "quantity": 2,
+      "sales": 1880,
+      "sharePct": 21.8
+    },
+    {
+      "rank": 3,
+      "name": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ",
+      "quantity": 1,
+      "sales": 750,
+      "sharePct": 8.7
+    },
+    {
+      "rank": 4,
+      "name": "専用しょうゆ｜さしみ醤油｜瓶 200mℓ",
+      "quantity": 1,
+      "sales": 400,
+      "sharePct": 4.6
+    }
+  ],
+  "recentOrders": [
+    {
+      "date": "7/4",
+      "orderNumber": "D3597C31FE7DAD56",
+      "productName": "混合醸造しょうゆ｜濃口醤油（紫：むらさき）｜ペットボトル 1.8ℓ ほか1点",
+      "quantity": 7,
+      "amount": 6520,
+      "shippingArea": "大阪府"
+    },
+    {
+      "date": "7/4",
+      "orderNumber": "C8F676DF8BE78D8E",
+      "productName": "本醸造しょうゆ｜丸大豆（まるだいず）醤油｜ビン 500mℓ ほか1点",
+      "quantity": 2,
+      "amount": 2120,
+      "shippingArea": "愛知県"
+    }
+  ],
   "aiComment": ""
 }
