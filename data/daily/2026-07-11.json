@@ -1,0 +1,21 @@
+{
+  "date": "2026-07-11",
+  "fetchedAt": "2026-07-12T11:08:36+09:00",
+  "orderCount": 1,
+  "totalSales": 1970,
+  "orders": [
+    {
+      "orderId": "DF8FF15F902B30CB",
+      "orderedAt": "2026-07-11T18:25:12+09:00",
+      "totalAmount": 1970,
+      "shippingArea": "兵庫県",
+      "items": [
+        {
+          "name": "混合醸造しょうゆ｜淡口（うすくち）醤油｜ペットボトル 1.0ℓ",
+          "quantity": 2,
+          "unitPrice": 550
+        }
+      ]
+    }
+  ]
+}
