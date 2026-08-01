@@ -1,16 +1,16 @@
 {
   "month": "2026-07",
   "monthLabel": "2026年7月",
-  "generatedAt": "2026-07-31",
-  "inProgress": true,
-  "daysCovered": 30,
+  "generatedAt": "2026-08-01",
+  "inProgress": false,
+  "daysCovered": 31,
   "daysInMonth": 31,
   "summary": {
     "totalSales": 10610,
     "orderCount": 3,
     "averageOrderValue": 3537,
     "monthOverMonthPct": -18.9,
-    "monthOverMonthBasis": "sameDayCount"
+    "monthOverMonthBasis": "full"
   },
   "dailySales": [
     {
